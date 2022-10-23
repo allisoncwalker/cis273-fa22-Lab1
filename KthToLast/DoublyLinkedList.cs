@@ -145,7 +145,34 @@ namespace KthToLast
         // Incomplete
         public void InsertAfter(T newValue, T existingValue)
         {
-            
+            // traverse
+
+            var currentNode = Head;
+
+            while (currentNode != null)
+            {
+
+                if (currentNode.Data.Equals(existingValue))
+                {
+                    //insert new node
+
+                    var newNode = new DoublyLinkedListNode<T>(newValue);
+
+                    newNode.Next = currentNode.Next;
+                    currentNode.Next = newNode;
+
+
+                    if (currentNode == Tail)
+                    {
+                        Tail = currentNode.Next;
+                    }
+
+                    length++;
+
+                }
+
+                currentNode = currentNode.Next;
+            }
         }
 
         public void InsertAt(T value, int index)
@@ -281,7 +308,55 @@ namespace KthToLast
         // Incomplete
         public void RemoveAt(int index)
         {
-            
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            if (Head.Data.Equals(index))
+            {
+
+              if (Head == Tail)
+                {
+                    Tail = null;
+
+                }
+
+                else
+                {
+                    Head = Head.Next;
+                }
+                length--;
+                return;
+            }
+
+            var currentNode = Head;
+
+            while (currentNode != null)
+            {
+                if (currentNode != null && currentNode.Data.Equals(index))
+                {
+                    var nodeToDelete = currentNode;
+
+                    if (nodeToDelete == Tail)
+                    {
+                        currentNode.Next = null;
+                        Tail = currentNode;
+                    }
+
+                    else
+                    {
+                        currentNode.Next = nodeToDelete.Next;
+
+                        nodeToDelete.Next = null;
+
+                    }
+
+                    return;
+                }
+
+                currentNode = currentNode.Next;
+            }
         }
 
         // Incomplete
@@ -289,11 +364,23 @@ namespace KthToLast
         {
             var reversedList = new LinkedList<T>();
 
-            
+            int index = 0;
+            var currentNode = Head;
+            int currentIndex = 0;
+
+            while (index != length + 1)
+            {
+                if (currentIndex == index)
+                {
+                    Prepend(currentNode.Data);
+                }
+                index++;
+                currentNode = currentNode.Next;
+                currentIndex++;
+            }
 
             return reversedList;
         }
-
         public override string ToString()
         {
             string result = "[";
@@ -315,7 +402,7 @@ namespace KthToLast
         {
             var currentNode = Tail;
 
-            for(int i=0; i < k; i++)
+            for (int i = 0; i < k; i++)
             {
                 currentNode = currentNode.Prev;
             }
@@ -324,4 +411,3 @@ namespace KthToLast
         }
     }
 }
-

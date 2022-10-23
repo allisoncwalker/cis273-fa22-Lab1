@@ -73,15 +73,10 @@ namespace KthToLast
 
         public bool Contains(T value)
         {
-            if (length == 0)
-            {
-                return false;
-            }
 
             // traverse
 
             var currentNode = Head;
-
             while (currentNode != null)
             {
                 if (currentNode.Data.Equals(value))
@@ -144,25 +139,37 @@ namespace KthToLast
         // Incomplete
         public void InsertAfter(T newValue, T existingValue)
         {
+
+            // traverse
+
             var currentNode = Head;
+
             while (currentNode != null)
             {
+
                 if (currentNode.Data.Equals(existingValue))
                 {
-                    var NewNode = new LinkedListNode<T>(newValue);
-                    NewNode.Next = currentNode.Next;
-                    currentNode.Next = NewNode;
+                    //insert new node
+
+                    var newNode = new LinkedListNode<T>(newValue);
+
+                    newNode.Next = currentNode.Next;
+                    currentNode.Next = newNode;
+
 
                     if (currentNode == Tail)
                     {
                         Tail = currentNode.Next;
                     }
+
                     length++;
+
                 }
 
                 currentNode = currentNode.Next;
             }
         }
+
 
         public void InsertAt(T value, int index)
         {
@@ -339,6 +346,21 @@ namespace KthToLast
         {
             var reversedList = new LinkedList<T>();
 
+            int index = 0;
+            var currentNode = Head;
+            int currentIndex = 0;
+
+            while (index != length + 1)
+            {
+                if (currentIndex == index)
+                {
+                    Prepend(currentNode.Data);
+                }
+                index++;
+                currentNode = currentNode.Next;
+                currentIndex++;
+            }
+
             return reversedList;
         }
 
@@ -362,15 +384,31 @@ namespace KthToLast
         // TODO 
         public T KthToLast(int k)
         {
-            var currentNode = Head;
-
-            for (int i = 0; i > k; i--)
+            if (Head == null)
             {
-                currentNode = currentNode.Next;
+                return default(T);
             }
 
-            return currentNode.Data;
+            LinkedListNode<T> p1 = Head;
+            LinkedListNode<T> p2 = Head;
+
+            for (int j = 0; j < k; j++)
+            {
+                if (p2 == null)
+                {
+                    return default(T);
+                }
+
+                p2 = p2.Next;
+
+            }
+
+            while (p2.Next != null)
+            {
+                p1 = p1.Next;
+                p2 = p2.Next;
+            }
+            return p1.Data;
         }
     }
 }
-

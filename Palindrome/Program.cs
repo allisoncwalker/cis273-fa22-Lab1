@@ -8,36 +8,42 @@ public class Program
     {
         LinkedList<string> linkedList = new LinkedList<string>();
 
-        linkedList.AddLast("xbx");
-        linkedList.AddLast("pka");
-        linkedList.AddLast("pka");
-        linkedList.AddLast("xbx");
+        linkedList.AddLast("0");
+        linkedList.AddLast("0");
 
+        IsPalindrome(linkedList);
     }
 
     public static bool IsPalindrome<T>(LinkedList<T> linkedList)
     {
-        var currentNode = linkedList.First;
-        var back = linkedList.Last;
+        LinkedListNode<T> currentNodeStart = linkedList.First;
+        LinkedListNode<T> currentNodeEnd = linkedList.Last;
+        LinkedListNode<T> startMarker = currentNodeStart;
+        LinkedListNode<T> endMarker = currentNodeEnd;
 
-        while (currentNode != null)
+        // are the first and last items the same?
+        while (currentNodeStart != null && currentNodeEnd != null)
         {
-            if (currentNode.Equals(back))
+
+            if (currentNodeStart.Value.Equals(currentNodeEnd.Value))
             {
-                currentNode = currentNode.Next;
+
+                // if so, move toward the middle
+                currentNodeStart = currentNodeStart.Next;
+                currentNodeEnd = currentNodeEnd.Previous;
+
+                if (currentNodeStart == endMarker && currentNodeEnd == startMarker)
+                {
+                    return true;
+                }
             }
+
             else
             {
                 return false;
             }
         }
 
-        foreach (var node in linkedList)
-        {
-            Console.WriteLine(node);
-        }
-
         return true;
     }
-
 }
