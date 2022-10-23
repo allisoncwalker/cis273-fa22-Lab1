@@ -18,17 +18,20 @@ namespace Polynomial
 
 		//TODO
 		public void AddTerm(double coeff, int power)
-		{
-            var currentNode = terms.First;
-            while(currentNode != null)
+        {
+            if (coeff == 0)
             {
-                //check for matching power
+                return;
+            }
+            var currentNode = terms.First;
+            while (currentNode != null)
+            {
                 if (power == currentNode.Value.Power)
                 {
                     currentNode.Value.Coefficient += coeff;
                     return;
                 }
-                //Check for lesser power
+
                 if (power > currentNode.Value.Power)
                 {
                     var newTerm = new Term(power, coeff);
@@ -39,16 +42,28 @@ namespace Polynomial
 
                 currentNode = currentNode.Next;
             }
+
             terms.AddLast(new Term(power, coeff));
-		}
+
+        }
 
         //TODO
         public override string ToString()
         {
             string result = "";
-            foreach(var term in terms)
+            if (NumberOfTerms == 0)
+            {
+                return "0";
+            }
+
+            foreach (var term in terms)
             {
                 result += term.ToString();
+
+                if (term != terms.Last.Value)
+                {
+                    result += "+";
+                }
             }
 
             return result;
@@ -75,28 +90,47 @@ namespace Polynomial
         public static Polynomial Subtract(Polynomial p1, Polynomial p2)
         {
             Polynomial difference = new Polynomial();
-            //Do the work...
+            // subtract all the terms from p1
+            foreach (var term in p1.terms)
+            {
+                difference.AddTerm(term.Coefficient, term.Power);
+            }
+            // subtract all the terms from p2
+            foreach (var term in p2.terms)
+            {
+                difference.AddTerm(term.Coefficient, term.Power);
+            }
 
             return difference;
         }
-        public static Polynomial Negate(Polynomial p1, Polynomial p2)
+        public static Polynomial Negate(Polynomial p)
         {
             Polynomial inverse = new Polynomial();
-
-            foreach (var term in p2.terms)
+            foreach (var term in p.terms)
             {
                 inverse.AddTerm(term.Coefficient * -1, term.Power);
+                return inverse;
+
             }
 
             return inverse;
         }
+
         public static Polynomial Multiply(Polynomial p1, Polynomial p2)
         {
-            Polynomial sum = new Polynomial();
-            //Do the work...
+            Polynomial product = new Polynomial();
+            while (p1 != null)
+            {
+                p2 = p2;
+                while (p2 != null)
+                {
 
-            return ;
+                }
+            }
+            return product;
         }
+
+
     }
 }
 

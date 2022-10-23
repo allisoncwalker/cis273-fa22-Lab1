@@ -1,4 +1,7 @@
-﻿namespace Palindrome;
+﻿using System.Collections.Generic;
+using System.Security;
+
+namespace Palindrome;
 public class Program
 {
     static void Main(string[] args)
@@ -10,29 +13,31 @@ public class Program
         linkedList.AddLast("pka");
         linkedList.AddLast("xbx");
 
-        var reverse = linkedList.Reverse();
+    }
+
+    public static bool IsPalindrome<T>(LinkedList<T> linkedList)
+    {
         var currentNode = linkedList.First;
-        var currentNodeReverse = reverse.First();
+        var back = linkedList.Last;
 
-        //while (currentNode != null)
-        //{
+        while (currentNode != null)
+        {
+            if (currentNode.Equals(back))
+            {
+                currentNode = currentNode.Next;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        //    currentNode = currentNode.Next;
-        //}
-
-        foreach(var node in linkedList)
+        foreach (var node in linkedList)
         {
             Console.WriteLine(node);
         }
-        Console.WriteLine( reverse.Equals( linkedList ));
+
+        return true;
     }
+
 }
-
-public static bool IsPalindrome<T>(LinkedList<T> linkedList)
-{
-    // Are the first and last items the same?
-
-    // if so, move towards the middle.
-    return true;
-}
-
